@@ -29,7 +29,7 @@ function showLoadScreen() {
         '<div class="drop-text">Перетащите файл <strong>.json.si</strong> сюда</div>' +
         '<div class="drop-hint">или нажмите, чтобы выбрать</div>' +
       '</div>' +
-      '<input type="file" id="file-input" accept=".json.si,.json" style="display:none">' +
+      '<input type="file" id="file-input" accept=".json.si,.si,.json" style="display:none">' +
     '</div>';
 
   var dz = R('drop-zone');

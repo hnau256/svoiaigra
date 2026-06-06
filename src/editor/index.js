@@ -324,8 +324,27 @@ function newFile() {
 
 async function openFile() {
   try {
-    var file = await pickFile();
-    if (!file) return;
+    var handle = null;
+    var file = null;
+
+    if (window.showOpenFilePicker) {
+      try {
+        var handles = await window.showOpenFilePicker({
+          types: [{ description:'Своя игра', accept:{ 'application/octet-stream':['.si','.json.si','.json'] } }]
+        });
+        handle = handles[0];
+        file = await handle.getFile();
+      } catch (e) {
+        if (e.name === 'AbortError') return;
+        handle = null;
+      }
+    }
+
+    if (!file) {
+      file = await pickFile();
+      if (!file) return;
+    }
+
     var data = await readFile(file);
     var result = validateGameData(data);
     if (!result.valid) {
@@ -333,7 +352,7 @@ async function openFile() {
       return;
     }
     state = data;
-    fileHandle = null;
+    fileHandle = handle;
     fileName = file.name;
     isDirty = false;
     render();
@@ -349,17 +368,23 @@ async function saveFile() {
     return;
   }
 
-  try {
-    if (fileHandle) {
+  if (fileHandle) {
+    try {
+      var opts = { mode: 'readwrite' };
+      var perm = await fileHandle.queryPermission(opts);
+      if (perm !== 'granted') {
+        perm = await fileHandle.requestPermission(opts);
+        if (perm !== 'granted') throw new Error('Нет доступа');
+      }
       var writable = await fileHandle.createWritable();
       await writable.write(JSON.stringify(state, null, 2));
       await writable.close();
       isDirty = false;
       updateToolbar();
       return;
+    } catch (e) {
+      // permission or write failed, fall through
     }
-  } catch (e) {
-    // fall through
   }
 
   await saveFileAs();
@@ -394,7 +419,7 @@ function pickFile() {
   return new Promise(function(resolve) {
     var input = document.createElement('input');
     input.type = 'file';
-    input.accept = '.json.si,.json';
+    input.accept = '.json.si,.si,.json';
     input.onchange = function() { resolve(input.files[0]); };
     input.click();
   });

@@ -91,7 +91,7 @@ function readFile(file) {
 
 function downloadFile(data, filename) {
   var json = JSON.stringify(data, null, 2);
-  var blob = new Blob([json], { type:'application/json' });
+  var blob = new Blob([json], { type:'application/octet-stream' });
   var url = URL.createObjectURL(blob);
   var a = document.createElement('a');
   a.href = url;
@@ -107,7 +107,7 @@ async function saveWithFilePicker(data, suggestedName) {
     try {
       var handle = await window.showSaveFilePicker({
         suggestedName: suggestedName || 'игра.json.si',
-        types: [{ description:'Своя игра', accept:{ 'application/json':['.json.si','.json'] } }]
+        types: [{ description:'Своя игра', accept:{ 'application/octet-stream':['.si','.json.si'] } }]
       });
       var writable = await handle.createWritable();
       await writable.write(JSON.stringify(data, null, 2));
