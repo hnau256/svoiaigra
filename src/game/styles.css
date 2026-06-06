@@ -1,0 +1,270 @@
+/* === Load screen === */
+.load-screen{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  min-height:100vh;
+  padding:40px 20px;
+}
+
+.load-title{
+  font-size:42px;
+  font-weight:800;
+  color:var(--gold);
+  margin-bottom:8px;
+  text-align:center;
+  letter-spacing:2px;
+}
+
+.load-subtitle{
+  font-size:16px;
+  color:var(--text-dim);
+  margin-bottom:40px;
+  text-align:center;
+}
+
+.drop-zone{
+  width:100%;
+  max-width:480px;
+  padding:50px 30px;
+  border:2px dashed var(--border);
+  border-radius:var(--radius-lg);
+  text-align:center;
+  cursor:pointer;
+  transition:all var(--transition);
+  background:var(--bg-panel);
+}
+.drop-zone:hover{
+  border-color:var(--gold);
+  background:rgba(212,168,67,0.05);
+}
+.drop-zone.drag-over{
+  border-color:var(--gold);
+  background:var(--gold-bg);
+  transform:scale(1.02);
+}
+
+.drop-icon{
+  font-size:48px;
+  margin-bottom:16px;
+  opacity:0.6;
+}
+
+.drop-text{
+  font-size:16px;
+  color:var(--text-dim);
+  margin-bottom:8px;
+}
+
+.drop-hint{
+  font-size:13px;
+  color:var(--text-muted);
+}
+
+/* === Game layout === */
+.game-screen{
+  display:flex;
+  flex-direction:column;
+  min-height:100vh;
+}
+
+.game-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:14px 24px;
+  background:var(--bg-panel);
+  border-bottom:1px solid var(--border);
+  flex-wrap:wrap;
+  gap:12px;
+}
+
+.game-title{
+  font-size:20px;
+  font-weight:700;
+  color:var(--gold);
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  max-width:60%;
+}
+
+.game-body{
+  flex:1;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  overflow:auto;
+}
+
+/* === Game grid === */
+.game-table{
+  border-collapse:separate;
+  border-spacing:4px;
+  width:100%;
+  max-width:1100px;
+  margin:0 auto;
+}
+
+.game-table th{
+  padding:10px 12px;
+  color:var(--text-dim);
+  font-size:13px;
+  font-weight:600;
+  text-transform:uppercase;
+  letter-spacing:0.5px;
+  text-align:center;
+  vertical-align:bottom;
+}
+
+.game-table th.col-price{width:70px}
+
+.game-cell{
+  padding:16px 12px;
+  text-align:center;
+  background:var(--bg-cell);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  cursor:pointer;
+  transition:all var(--transition);
+  font-size:22px;
+  font-weight:700;
+  color:var(--gold);
+  min-width:100px;
+  height:70px;
+  vertical-align:middle;
+  user-select:none;
+}
+
+.game-cell:hover{
+  background:var(--bg-cell-hover);
+  border-color:var(--gold);
+  transform:scale(1.04);
+}
+
+.game-cell.answered{
+  background:var(--bg-cell-done);
+  border-color:transparent;
+  color:var(--text-muted);
+  cursor:not-allowed;
+  pointer-events:none;
+}
+
+/* === Question modal === */
+.question-modal{
+  text-align:center;
+}
+
+.qm-type{
+  margin-bottom:12px;
+}
+
+.qm-topic-price{
+  font-size:14px;
+  color:var(--text-dim);
+  margin-bottom:20px;
+}
+
+.qm-question-wrapper{
+  margin-bottom:28px;
+  min-height:60px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.qm-question{
+  font-size:22px;
+  font-weight:500;
+  color:var(--text);
+  line-height:1.5;
+  text-align:center;
+}
+
+.qm-answer-area{
+  margin-bottom:24px;
+  transition:all 0.3s ease;
+}
+
+.qm-answer-area.hidden-area{
+  opacity:0;
+  max-height:0;
+  overflow:hidden;
+  margin-bottom:0;
+}
+
+.qm-answer-reveal{
+  padding:16px 20px;
+  background:var(--bg-main);
+  border:1px solid var(--gold);
+  border-radius:var(--radius);
+}
+
+.qm-answer-text{
+  font-size:20px;
+  font-weight:600;
+  color:var(--gold-light);
+}
+
+.qm-answer-label{
+  font-size:11px;
+  color:var(--text-muted);
+  text-transform:uppercase;
+  letter-spacing:0.5px;
+  margin-bottom:6px;
+}
+
+/* === End screen === */
+.end-screen{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  min-height:100vh;
+  padding:40px 20px;
+  text-align:center;
+}
+
+.end-title{
+  font-size:48px;
+  font-weight:800;
+  color:var(--gold);
+  margin-bottom:12px;
+}
+
+.end-subtitle{
+  font-size:18px;
+  color:var(--text-dim);
+  margin-bottom:36px;
+}
+
+/* === Question type badges in game modal === */
+.qm-type-badge{
+  display:inline-block;
+  padding:6px 20px;
+  border-radius:var(--radius);
+  font-size:14px;
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:1px;
+}
+
+.qm-type-badge.auction{
+  background:var(--gold-bg);
+  color:var(--gold);
+  border:2px solid var(--gold);
+}
+
+.qm-type-badge.cat{
+  background:var(--red-bg);
+  color:var(--red);
+  border:2px solid var(--red);
+}
+
+.qm-bonus-info{
+  font-size:14px;
+  color:var(--red);
+  margin-top:6px;
+}

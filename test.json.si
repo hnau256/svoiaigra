@@ -21,8 +21,8 @@
           "type": "simple"
         },
         {
-          "question": "Столица Бразилии",
-          "answer": "Бразилиа",
+          "question": "Самая длинная река в мире",
+          "answer": "Нил",
           "type": "cat_in_bag",
           "bonus_topic": "География",
           "bonus_price": 400
@@ -58,8 +58,8 @@
           "type": "simple"
         },
         {
-          "question": "Кто написал «Мастер и Маргарита»?",
-          "answer": "Михаил Булгаков",
+          "question": "В каком году человек впервые полетел в космос?",
+          "answer": "1961",
           "type": "cat_in_bag",
           "bonus_topic": "XX век",
           "bonus_price": 500
