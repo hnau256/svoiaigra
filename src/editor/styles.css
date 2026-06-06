@@ -1,0 +1,236 @@
+/* === Toolbar === */
+.toolbar{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:10px 16px;
+  background:var(--bg-panel);
+  border-bottom:1px solid var(--border);
+  flex-wrap:wrap;
+}
+.toolbar-spacer{flex:1}
+.toolbar-filename{
+  font-size:12px;
+  color:var(--text-dim);
+}
+
+/* === Layout === */
+.editor-body{
+  max-width:800px;
+  margin:0 auto;
+  padding:16px;
+}
+
+/* === Price bar === */
+.prices-bar{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+  align-items:center;
+  margin-top:4px;
+}
+
+.price-tag{
+  display:inline-flex;
+  align-items:center;
+  gap:2px;
+  padding:3px 6px;
+  background:var(--bg-cell);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+}
+.price-tag input{
+  width:55px;
+  padding:3px 6px;
+  border:none;
+  background:transparent;
+  color:var(--gold);
+  font-size:13px;
+  font-weight:600;
+  text-align:center;
+  font-family:var(--font);
+}
+.price-tag input:focus{
+  outline:none;
+  background:var(--bg-input);
+  border-radius:3px;
+}
+.price-tag .price-remove{
+  cursor:pointer;
+  color:var(--text-muted);
+  font-size:14px;
+  line-height:1;
+  padding:2px 4px;
+  transition:color var(--transition);
+}
+.price-tag .price-remove.hidden{display:none}
+.price-tag .price-remove:hover{color:var(--red)}
+
+/* === Topic card === */
+.topic-card{
+  background:var(--bg-panel);
+  border:1px solid var(--border);
+  border-radius:var(--radius-lg);
+  margin-bottom:16px;
+  overflow:hidden;
+}
+
+.topic-header-bar{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:10px 16px;
+  background:var(--bg-cell);
+  border-bottom:1px solid var(--border);
+}
+
+.topic-header-bar input{
+  flex:1;
+  padding:5px 8px;
+  border:1px solid transparent;
+  background:transparent;
+  color:var(--gold);
+  font-size:14px;
+  font-weight:600;
+  font-family:var(--font);
+  border-radius:3px;
+  transition:all var(--transition);
+  min-width:0;
+}
+.topic-header-bar input:focus{
+  outline:none;
+  border-color:var(--gold);
+  background:var(--bg-input);
+}
+.topic-header-bar input:hover:not(:focus){
+  border-color:var(--border-light);
+}
+
+.topic-header-ctrls{
+  display:flex;
+  gap:4px;
+  flex-shrink:0;
+}
+
+.topic-header-ctrls .btn.hidden{
+  display:none;
+}
+
+/* === Question row === */
+.q-row{
+  padding:12px 16px;
+  border-bottom:1px solid var(--border);
+  transition:background var(--transition);
+}
+.q-row:last-child{border-bottom:none}
+.q-row:hover{background:var(--bg-cell)}
+
+.q-row-header{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-bottom:10px;
+}
+
+.q-row-price{
+  font-size:16px;
+  font-weight:700;
+  color:var(--gold);
+  min-width:55px;
+}
+
+.q-row-select{
+  width:140px;
+  flex-shrink:0;
+}
+
+.q-row-select select{
+  width:100%;
+  padding:5px 28px 5px 8px;
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  background:var(--bg-input);
+  color:var(--text);
+  font-size:12px;
+  font-family:var(--font);
+  cursor:pointer;
+  appearance:none;
+  -webkit-appearance:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8' viewBox='0 0 8 8'%3E%3Cpath d='M4 6L1 2h6z' fill='%238899bb'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;
+  background-position:right 8px center;
+}
+.q-row-select select:focus{
+  outline:none;
+  border-color:var(--gold);
+}
+
+.q-row-fields{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+}
+
+.q-row-fields input{
+  width:100%;
+  padding:6px 10px;
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  background:var(--bg-input);
+  color:var(--text);
+  font-size:13px;
+  font-family:var(--font);
+}
+.q-row-fields input:focus{
+  outline:none;
+  border-color:var(--gold);
+}
+.q-row-fields input::placeholder{color:var(--text-muted)}
+
+.q-bonus-row{
+  margin-top:8px;
+  padding:10px 12px;
+  border:1px solid var(--red);
+  border-radius:var(--radius);
+  background:rgba(224,85,85,0.06);
+}
+
+.q-bonus-header{
+  font-size:11px;
+  color:var(--red);
+  text-transform:uppercase;
+  letter-spacing:0.8px;
+  font-weight:700;
+  margin-bottom:8px;
+}
+
+.q-bonus-fields{
+  display:flex;
+  gap:10px;
+}
+
+.q-bonus-fields .field{
+  flex:1;
+  margin-bottom:0;
+}
+
+.bonus-input{
+  border-color:rgba(224,85,85,0.3) !important;
+}
+.bonus-input:focus{
+  border-color:var(--red) !important;
+}
+
+/* === Add topic === */
+.add-topic-area{
+  text-align:center;
+  padding:8px 0;
+}
+
+/* === Empty state === */
+.empty-state{
+  text-align:center;
+  padding:40px;
+  color:var(--text-muted);
+  font-size:14px;
+}
