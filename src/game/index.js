@@ -5,7 +5,7 @@ var R = document.getElementById.bind(document);
 
 var gameData = null;
 var answered = {};   // "ti-qi" -> true
-var answerRevealed = false;
+var currentPhase = 0;  // 0=type, 1=question, 2=answer
 var currentTi = -1;
 var currentQi = -1;
 
@@ -16,7 +16,7 @@ function showLoadScreen() {
   answered = {};
   currentTi = -1;
   currentQi = -1;
-  answerRevealed = false;
+  currentPhase = 0;
   document.removeEventListener('keydown', questionKeyHandler);
   R('modal-container').innerHTML = '';
 
@@ -139,8 +139,58 @@ function openQuestionModal(ti, qi) {
 
   currentTi = ti;
   currentQi = qi;
-  answerRevealed = false;
 
+  if (q.type === QTYPE.AUCTION) {
+    currentPhase = 0;
+    renderTypeModal(topic, q, price);
+  } else if (q.type === QTYPE.CAT) {
+    currentPhase = 0;
+    renderTypeModal(topic, q, price);
+  } else {
+    currentPhase = 1;
+    renderQuestionModal(topic, q, price);
+  }
+}
+
+function renderTypeModal(topic, q, price) {
+  var isCat = q.type === QTYPE.CAT;
+  var badgeClass = isCat ? 'cat' : 'auction';
+  var badgeText = isCat ? 'Кот в мешке' : 'Аукцион';
+
+  var html =
+    '<div class="modal-overlay" id="question-modal">' +
+      '<div class="modal question-modal">' +
+        '<div class="qm-type" style="margin-bottom:16px">' +
+          '<span class="qm-type-badge ' + badgeClass + '" style="font-size:28px;padding:12px 32px">' + badgeText + '</span>' +
+        '</div>' +
+        '<div class="qm-topic-price" style="font-size:16px">' +
+          escapeHtml(topic.name) + ' &nbsp;/&nbsp; ' + price +
+        '</div>' +
+        '<div class="modal-actions" style="justify-content:center;margin-top:28px">' +
+          '<button class="btn btn-primary btn-lg" id="qm-next-btn">Далее</button>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
+
+  R('modal-container').innerHTML = html;
+
+  document.getElementById('qm-next-btn').addEventListener('click', advanceToQuestion);
+  document.getElementById('question-modal').addEventListener('click', function(e){
+    if (e.target === this) cancelQuestionModal();
+  });
+
+  document.addEventListener('keydown', questionKeyHandler);
+}
+
+function advanceToQuestion() {
+  var topic = gameData.topics[currentTi];
+  var q = topic.questions[currentQi];
+  var price = gameData.prices[currentQi];
+  currentPhase = 1;
+  renderQuestionModal(topic, q, price);
+}
+
+function renderQuestionModal(topic, q, price) {
   var typeHtml = '';
   if (q.type === QTYPE.AUCTION) {
     typeHtml = '<div class="qm-type"><span class="qm-type-badge auction">Аукцион</span></div>';
@@ -178,16 +228,14 @@ function openQuestionModal(ti, qi) {
   document.getElementById('qm-close-btn').addEventListener('click', closeQuestionModal);
   document.getElementById('question-modal').addEventListener('click', function(e){
     if (e.target === this) {
-      if (answerRevealed) closeQuestionModal();
+      if (currentPhase === 2) closeQuestionModal();
       else cancelQuestionModal();
     }
   });
-
-  document.addEventListener('keydown', questionKeyHandler);
 }
 
 function revealAnswer() {
-  answerRevealed = true;
+  currentPhase = 2;
   var area = document.getElementById('qm-answer-area');
   if (area) area.classList.remove('hidden-area');
 
@@ -199,7 +247,16 @@ function revealAnswer() {
 }
 
 function questionKeyHandler(e) {
-  if (!answerRevealed) {
+  if (currentPhase === 0) {
+    if (e.key === 'Enter' || e.key === ' ') {
+      if (e.target.tagName === 'BUTTON') return;
+      e.preventDefault();
+      advanceToQuestion();
+    } else if (e.key === 'Escape') {
+      e.preventDefault();
+      cancelQuestionModal();
+    }
+  } else if (currentPhase === 1) {
     if (e.key === 'Enter' || e.key === ' ') {
       if (e.target.tagName === 'BUTTON') return;
       e.preventDefault();
@@ -208,7 +265,7 @@ function questionKeyHandler(e) {
       e.preventDefault();
       cancelQuestionModal();
     }
-  } else if (answerRevealed) {
+  } else if (currentPhase === 2) {
     if (e.key === 'Enter' || e.key === ' ' || e.key === 'Escape') {
       e.preventDefault();
       closeQuestionModal();
@@ -221,7 +278,7 @@ function cancelQuestionModal() {
   R('modal-container').innerHTML = '';
   currentTi = -1;
   currentQi = -1;
-  answerRevealed = false;
+  currentPhase = 0;
 }
 
 function closeQuestionModal() {
@@ -234,7 +291,7 @@ function closeQuestionModal() {
 
   currentTi = -1;
   currentQi = -1;
-  answerRevealed = false;
+  currentPhase = 0;
 
   renderGrid();
 }
